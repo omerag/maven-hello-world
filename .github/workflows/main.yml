@@ -38,12 +38,12 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: compile with maven
         working-directory: my-app/
-        run: mvn compile
+        run: mvn compile -f pom.xml
         
       - name: test with maven
         working-directory: my-app/
-        run: mvn test
+        run: mvn test -f pom.xml
       
       - name: package with maven
         working-directory: my-app/
-        run: mvn package
+        run: mvn package -f pom.xml
