@@ -37,7 +37,11 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: compile with maven
-        run: mvn compile
+        run: |
+          pwd
+          ls
+          whoami
+          mvn compile
         
       - name: test with maven
         run: mvn test
