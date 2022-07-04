@@ -79,7 +79,7 @@ jobs:
       - name: Build Docker image
         run: |
           version=$(cat pom.xml | grep "<version>" | head -n 1 | awk -F '[<>]' '{print $3}')
-          docker build -t $hello:$version -t . 
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/$hello:$version . 
 
       - name: Publish Docker image
         run: docker push
