@@ -84,3 +84,6 @@ jobs:
           git config --local user.email secrets.GITHUB_USEREMAIL
           git add pom.xml
           git commit -m "update project to $(cat version.txt)"
+      
+      - name: run container
+        run: docker run omerag/hello:latest
