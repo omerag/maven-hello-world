@@ -88,4 +88,4 @@ jobs:
 
       - name: Publish Docker image
         working-directory: my-app/
-        run: docker push DOCKER_USER/hello:$version
+        run: docker push omer/hello:$version
