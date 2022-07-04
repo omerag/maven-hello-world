@@ -46,7 +46,9 @@ jobs:
           version=$(cat pom.xml | grep "<version>" | head -n 1 | awk -F '[<>]' '{print $3}')
           echo -e "version = $version"
           new_version=$(echo $version | awk -F '.' '{print $1 "." $2 "." $(( $3 + 1 ))}')
+          echo -e "new_version = $new_version"
           mvn versions:set -DnewVersion="$new_version"
+          cat pom.xml | grep "<version>" | head -n 1 | awk -F '[<>]' '{print $3}'
       
       - name: commit files
         working-directory: my-app/
