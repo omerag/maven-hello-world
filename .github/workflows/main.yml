@@ -56,10 +56,10 @@ jobs:
       - name: commit files
         working-directory: my-app/
         run: |
-        git config --local user.name secrets.GITHUB_USERNAME
-        git config --local user.email secrets.GITHUB_USEREMAIL
-        git add pom.xml
-        git commit -m "update project version"
+          git config --local user.name secrets.GITHUB_USERNAME
+          git config --local user.email secrets.GITHUB_USEREMAIL
+          git add pom.xml
+          git commit -m "update project version"
 
       - name: push changes
         uses: ad-m/github-push-action@master
