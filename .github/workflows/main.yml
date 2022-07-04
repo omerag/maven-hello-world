@@ -83,4 +83,4 @@ jobs:
           docker build -t hello:$version . 
 
       - name: Publish Docker image
-        run: docker push hello
+        run: docker push omerag/hello:$version
