@@ -51,7 +51,6 @@ jobs:
           echo -e "version = $version"
           new_version=$(echo $version | awk -F '.' '{print $1 "." $2 "." $(( $3 + 1 ))}')
           mvn versions:set -DnewVersion="$new_version"
-          cat pom.xml | grep "<version>" | head -n 1 | awk -F '[<>]' '{print $3}'
       
       - name: commit files
         working-directory: my-app/
@@ -59,7 +58,8 @@ jobs:
           git config --local user.name secrets.GITHUB_USERNAME
           git config --local user.email secrets.GITHUB_USEREMAIL
           git add pom.xml
-          git commit -m "update project version"
+          version=$(cat pom.xml | grep "<version>" | head -n 1 | awk -F '[<>]' '{print $3}')
+          git commit -m "update project to $version"
 
       - name: push changes
         uses: ad-m/github-push-action@master
