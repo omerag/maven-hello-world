@@ -71,7 +71,7 @@ jobs:
         name: Build & push Docker image
         with:
           image: $DOCKER_USER/hello
-          tags: $(cat my-app/version.txt)
+          tags: $(cat my-app/version.txt), latest
           registry: docker.io
           dockerfile: my-app/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
