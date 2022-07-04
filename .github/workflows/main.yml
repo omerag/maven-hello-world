@@ -44,6 +44,16 @@ jobs:
         working-directory: my-app/
         run: mvn test -f pom.xml
       
+      - name: update version
+        working-directory: my-app/
+        run: |
+          version=$(cat pom.xml | grep "<version>" | head -n 1 | awk -F '[<>]' '{print $3}')
+          echo -e "version = $version"
+          new_version=$(echo $version | awk -F '.' '{print $1 "." $2 "." $(( $3 + 1 ))}')
+          mvn versions:set -DnewVersion="$new_version"
+          cat pom.xml | grep "<version>" | head -n 1 | awk -F '[<>]' '{print $3}'
+
+      
       - name: package with maven
         working-directory: my-app/
         run: mvn package -f pom.xml
