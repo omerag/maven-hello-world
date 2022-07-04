@@ -83,4 +83,5 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/hello:$version . 
 
       - name: Publish Docker image
+        working-directory: my-app/
         run: docker push ${{ secrets.DOCKER_USERNAME }}/hello:$version
