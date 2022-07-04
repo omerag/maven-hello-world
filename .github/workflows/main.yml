@@ -49,8 +49,9 @@ jobs:
         run: |
           version=$(cat pom.xml | grep "<version>" | head -n 1 | awk -F '[<>]' '{print $3}')
           echo -e "version = $version"
-          JAR_VAR=$(echo $version | awk -F '.' '{print $1 "." $2 "." $3 + 1}')
-          mvn versions:set -DnewVersion="$JAR_VAR"
+          new_version=$(echo $version | awk -F '.' '{print $1 "." $2 "." $3 + 1}')
+          mvn versions:set -DnewVersion="$new_version"
+          echo $new_version > version.txt
 
       - name: push changes
         uses: ad-m/github-push-action@master
@@ -70,7 +71,7 @@ jobs:
         name: Build & push Docker image
         with:
           image: $DOCKER_USER/hello
-          tags: $JAR_VAR
+          tags: $(cat my-app/version.txt)
           registry: docker.io
           dockerfile: my-app/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -82,4 +83,4 @@ jobs:
           git config --local user.name secrets.GITHUB_USERNAME
           git config --local user.email secrets.GITHUB_USEREMAIL
           git add pom.xml
-          git commit -m "update project to $JAR_VAR"
+          git commit -m "update project to $(cat version.txt)"
