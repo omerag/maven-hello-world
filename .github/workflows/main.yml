@@ -68,6 +68,7 @@ jobs:
       
       - uses: mr-smithers-excellent/docker-build-push@v5
         name: Build & push Docker image
+        working-directory: my-app/
         with:
           image: $DOCKER_USER/hello
           tags: $JAR_VAR
