@@ -83,9 +83,9 @@ jobs:
         working-directory: my-app/
         run: |
           version=$(cat pom.xml | grep "<version>" | head -n 1 | awk -F '[<>]' '{print $3}')
-          docker build -t $DOCKER_USER/hello:$version . 
+          docker build -t omerag/hello:$version . 
           docker images
 
       - name: Publish Docker image
         working-directory: my-app/
-        run: docker push $DOCKER_USER/hello:$version
+        run: docker push omerag/hello:$version
