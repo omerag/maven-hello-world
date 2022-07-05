@@ -1,4 +1,4 @@
 FROM openjdk:11-jdk-slim
-COPY my-app/target/*.jar app/
+COPY my-app/target/my-app-*-*-*.jar app/hello.jar
 RUN ls && pwd && ls app
-CMD java -cp my-app/target/my-app-1.0.2.jar com.mycompany.app.App
+CMD java -cp my-app/target/hello.jar com.mycompany.app.App
