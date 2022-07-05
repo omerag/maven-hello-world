@@ -8,6 +8,7 @@ on:
   push:
     branches:
     - master
+    - dev
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,21 +29,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: git checkout 
         uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: set up maven
-        uses: s4u/setup-maven-action@v1.2.1
-        with:
-          java-version: 8
-
-      # Runs a set of commands using the runners shell
-      - name: compile with maven
-        working-directory: my-app/
-        run: mvn compile -f pom.xml
-        
-      - name: test with maven
-        working-directory: my-app/
-        run: mvn test -f pom.xml
       
       - name: update version
         working-directory: my-app/
@@ -53,20 +39,7 @@ jobs:
           mvn versions:set -DnewVersion="$new_version"
           echo $new_version > version.txt
 
-      - name: push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-
-      - name: package with maven
-        working-directory: my-app/
-        run: mvn clean package -f pom.xml -DskipTests
-      
-      - name: verify with maven
-        working-directory: my-app/
-        run: mvn clean verify -f pom.xml
-      
+          
       - uses: mr-smithers-excellent/docker-build-push@v5
         name: Build & push Docker image
         with:
@@ -87,3 +60,9 @@ jobs:
       
       - name: run container
         run: docker run omerag/hello:latest
+
+      - name: push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
