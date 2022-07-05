@@ -1,6 +1,6 @@
 FROM maven:3.5-jdk-8-alpine as builder
 COPY my-app app
-RUN mvn package -f pom.xml
+RUN cd app && ls && mvn package -f pom.xml
 
 
 
